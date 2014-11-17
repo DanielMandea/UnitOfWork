@@ -10,9 +10,9 @@
 Pod::Spec.new do |s|
   s.name             = "UnitOfWork"
   s.version          = "0.1.0"
-  s.summary          = "This library provides the best for using NSOperations "
+  s.summary          = "This library provides the best bethod for using NSOperations "
   s.description      = <<-DESC
-                        This library provides the best for using NSOperations when dealing with Core Data, HTTP requests , etc
+                        This library provides the best bethod for using NSOperations when dealing with Core Data, HTTP, MQTT etc
                        * Markdown format.
                        * Don't worry about the indent, we strip it!
                        DESC
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "Mandea Daniel" => "daniel.mandea@yahoo.com" }
-  s.source           = { :git => "https://github.com/DanielMandea/UnitOfWork.git", :tag => 0.1.0}
+  s.source           = { :git => "https://github.com/DanielMandea/UnitOfWork.git", :tag => "0.1.0"}
   # s.social_media_url = 'https://twitter.com/daniel.mandea'
 
   s.platform     = :ios, '7.0'
