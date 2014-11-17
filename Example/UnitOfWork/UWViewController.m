@@ -7,6 +7,8 @@
 //
 
 #import "UWViewController.h"
+#import <UWUnitOfWork.h>
+#import <UWOperationsManager.h>
 
 @interface UWViewController ()
 

@@ -1,6 +1,6 @@
 PODS:
   - FBSnapshotTestCase (1.4)
-  - UnitOfWork (0.1.0)
+  - UnitOfWork (0.1.1)
 
 DEPENDENCIES:
   - FBSnapshotTestCase
@@ -12,6 +12,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FBSnapshotTestCase: f9f225b5ba11c8d8c09075590490df16314e4d62
-  UnitOfWork: 1b714e470301a16c3cbd8606e214ce101a580567
+  UnitOfWork: aa8c297c7e8e6537d1a0a9b4503fc1f9c44e43eb
 
 COCOAPODS: 0.34.4
