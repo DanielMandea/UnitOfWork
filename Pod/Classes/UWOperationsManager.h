@@ -7,15 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class UWUnitOfWork;
-
-typedef enum {
-    UWUnitOfWorkTypeDefault,
-    UWUnitOfWorkTypeCoreData,
-    UWUnitOfWorkTypeHTTP,
-    UWUnitOFWorkTypeMQTT
-}UWUnitOFWorkType;
+#import "UWUnitOfWork.h"
 
 @interface UWOperationsManager : NSObject
 
@@ -44,6 +36,11 @@ typedef enum {
  */
 - (void)performUnitOfWork:(UWUnitOfWork *)unitOfWork;
 
-
+/**
+ *  Set some received response
+ *
+ *  @param responseData data received
+ */
+- (void)setMQTTResponseForUnitOfWork:(NSDictionary *)response;
 
 @end

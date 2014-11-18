@@ -10,22 +10,41 @@
 
 @class UWUnitOfWork;
 
+typedef enum {
+    UWUnitOfWorkTypeDefault,
+    UWUnitOfWorkTypeCoreData,
+    UWUnitOfWorkTypeHTTP,
+    UWUnitOFWorkTypeMQTT
+}UWUnitOFWorkType;
+
 @protocol UWUnitOfWorkDelegate <NSObject>
 
 - (void)unitOfWorkPerformedWithSuccess:(UWUnitOfWork *)unitOfWork;
 
 @end
 
+@protocol UWUnitOfWorkMQTTDelegate <NSObject>
+
+- (void)unitOfWork:(UWUnitOfWork *)unitOfWork receivedResponse:(NSDictionary *)response;
+
+@end
+
 @interface UWUnitOfWork : NSObject
+
+@property (nonatomic, strong) NSString *unitOfWorkID;
+@property (nonatomic, strong) NSArray *operations;
+@property (nonatomic, weak) id <UWUnitOfWorkDelegate> delegate;
+@property (nonatomic, weak) id <UWUnitOfWorkMQTTDelegate> mqttDelegate;
+@property (nonatomic, assign, readonly) UWUnitOFWorkType unitOfWorkType;
 
 /**
  *  Init unit of work with multiple operations
  *
- *  @param operations an array that contanins all the operations that need to be performed
+ *  @param unitOfWorkType the type of UnitOfWork
  *
  *  @return an instance of JLUnitOfWork object
  */
-- (instancetype)initWithOperations:(NSArray *)operations;
+- (instancetype)initWithType:(UWUnitOFWorkType)unitOfWorkType;
 
 /**
  *  This method adds all the operations on a given queue
@@ -41,8 +60,14 @@
  */
 - (void)setUnitOfWorkOperations:(NSArray *)operations;
 
-@property (nonatomic, strong) NSString *unitOfWorkID;
-@property (nonatomic, strong) NSArray *operations;
-@property (nonatomic, weak) id <UWUnitOfWorkDelegate> delegate;
+#pragma mark - MQTT 
+
+/**
+ *  Set Response the response
+ *
+ *  @param response an dictionary that contains the response for this UNitOfWork
+ */
+- (void)setUnitOfWorkResponse:(NSDictionary *)response;
+
 
 @end

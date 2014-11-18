@@ -18,9 +18,9 @@
 
 @implementation UWUnitOfWork
 
-- (instancetype)initWithOperations:(NSArray *)operations {
+- (instancetype)initWithType:(UWUnitOFWorkType)unitOfWorkType {
     if (self = [super init]) {
-        _operations = operations;
+        _unitOfWorkType = unitOfWorkType;
         _unitOfWorkID = [self generateUnitOfWorkId];
         _currentOperationQueue = [[NSOperationQueue alloc] init];
     }
@@ -29,6 +29,12 @@
 
 - (void)setUnitOfWorkOperations:(NSArray *)operations {
     _operations = operations;
+}
+
+#pragma mark - Helpers
+
+- (NSString *)generateUnitOfWorkId {
+    return [[NSUUID UUID] UUIDString];
 }
 
 #pragma mark - Run Operations
@@ -57,12 +63,15 @@
     }
 }
 
-// Check if all operation in UnitOf Work Are done
-#pragma mark - Helpers
+#pragma mark - MQTT
 
-- (NSString *)generateUnitOfWorkId {
-    return @"SomeID";
+- (void)setUnitOfWorkResponse:(NSDictionary *)response {
+    if ([self.mqttDelegate respondsToSelector:@selector(unitOfWork:receivedResponse:)]) {
+        [self.mqttDelegate unitOfWork:self receivedResponse:response];
+    }
 }
+
+// TODO Check if all operation in UnitOf Work Are done
 
 
 @end

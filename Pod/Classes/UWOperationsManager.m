@@ -7,7 +7,6 @@
 //
 
 #import "UWOperationsManager.h"
-#import "UWUnitOfWork.h"
 
 @interface UWOperationsManager () <UWUnitOfWorkDelegate>
 
@@ -40,7 +39,6 @@
 - (void)performUnitOfWork:(UWUnitOfWork *)unitOfWork {
     [unitOfWork performUnitOfWork];
     unitOfWork.delegate = self;
-    [self.unitsOfWork addObject:unitOfWork];
 }
 
 - (UWUnitOfWork *)newUnitOfWorkOfType:(UWUnitOFWorkType)unitOfWorkType {
@@ -48,33 +46,40 @@
     
     switch (unitOfWorkType) {
         case UWUnitOfWorkTypeDefault:
-          unitOfWirk = [[UWUnitOfWork alloc] initWithOperations:@[]];
+          unitOfWirk = [[UWUnitOfWork alloc] initWithType:UWUnitOfWorkTypeDefault];
             break;
             
         case UWUnitOfWorkTypeCoreData:
-            unitOfWirk = [[UWUnitOfWork alloc] initWithOperations:@[]];
+            unitOfWirk = [[UWUnitOfWork alloc] initWithType:UWUnitOfWorkTypeCoreData];
             break;
             
         case UWUnitOfWorkTypeHTTP:
-            unitOfWirk = [[UWUnitOfWork alloc] initWithOperations:@[]];
+            unitOfWirk = [[UWUnitOfWork alloc] initWithType:UWUnitOfWorkTypeHTTP];
             break;
             
         case UWUnitOFWorkTypeMQTT:
-            unitOfWirk = [[UWUnitOfWork alloc] initWithOperations:@[]];
-            break;
-            
-        default:
-            unitOfWirk = [[UWUnitOfWork alloc] initWithOperations:@[]];
+            unitOfWirk = [[UWUnitOfWork alloc] initWithType:UWUnitOFWorkTypeMQTT];
             break;
     }
-    
     return unitOfWirk;
+}
+
+#pragma mark - UnitOfWorkResponse
+
+- (void)setMQTTResponseForUnitOfWork:(NSDictionary *)response {
+    NSString *unitOfWorkID = [response objectForKey:@"ReplyToID"];
+    for (UWUnitOfWork *unitOfWork in self.unitsOfWork) {
+        if ([unitOfWork.unitOfWorkID isEqualToString:unitOfWorkID]) {
+            [unitOfWork setUnitOfWorkResponse:response];
+            [self.unitsOfWork removeObject:self.unitsOfWork];
+        }
+    }
 }
 
 #pragma mark - JLUnitOfWorkDelegate
 
 - (void)unitOfWorkPerformedWithSuccess:(UWUnitOfWork *)unitOfWork {
-    [self.unitsOfWork removeObject:unitOfWork];
+    [self.unitsOfWork addObject:unitOfWork];
 }
 
 // TODO Check at some interval if there are some units of work that are not done 
