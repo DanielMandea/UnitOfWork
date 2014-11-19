@@ -65,9 +65,11 @@
 
 #pragma mark - MQTT
 
-- (void)setUnitOfWorkResponse:(NSDictionary *)response {
+- (void)setUnitOfWorkResponse:(id)response {
     if ([self.mqttDelegate respondsToSelector:@selector(unitOfWork:receivedResponse:)]) {
         [self.mqttDelegate unitOfWork:self receivedResponse:response];
+    } else if ([self respondsToSelector:self.responseSelector]) {
+        [self performSelector:self.responseSelector withObject:response afterDelay:0.0];
     }
 }
 

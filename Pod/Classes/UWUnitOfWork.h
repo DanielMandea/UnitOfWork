@@ -25,7 +25,7 @@ typedef enum {
 
 @protocol UWUnitOfWorkMQTTDelegate <NSObject>
 
-- (void)unitOfWork:(UWUnitOfWork *)unitOfWork receivedResponse:(NSDictionary *)response;
+- (void)unitOfWork:(UWUnitOfWork *)unitOfWork receivedResponse:(id)response;
 
 @end
 
@@ -33,6 +33,8 @@ typedef enum {
 
 @property (nonatomic, strong) NSString *unitOfWorkID;
 @property (nonatomic, strong) NSArray *operations;
+@property (nonatomic, assign) SEL responseSelector;
+
 @property (nonatomic, weak) id <UWUnitOfWorkDelegate> delegate;
 @property (nonatomic, weak) id <UWUnitOfWorkMQTTDelegate> mqttDelegate;
 @property (nonatomic, assign, readonly) UWUnitOFWorkType unitOfWorkType;

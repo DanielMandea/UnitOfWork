@@ -41,6 +41,6 @@
  *
  *  @param responseData data received
  */
-- (void)setMQTTResponseForUnitOfWork:(NSDictionary *)response;
+- (void)setMQTTResponseForUnitOfWork:(id)response;
 
 @end

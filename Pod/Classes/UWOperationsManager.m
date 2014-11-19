@@ -66,7 +66,7 @@
 
 #pragma mark - UnitOfWorkResponse
 
-- (void)setMQTTResponseForUnitOfWork:(NSDictionary *)response {
+- (void)setMQTTResponseForUnitOfWork:(id)response {
     NSString *unitOfWorkID = [response objectForKey:@"ReplyToID"];
     for (UWUnitOfWork *unitOfWork in self.unitsOfWork) {
         if ([unitOfWork.unitOfWorkID isEqualToString:unitOfWorkID]) {
